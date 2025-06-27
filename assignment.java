@@ -33,16 +33,16 @@ public class assignment {
         for (Map<String, String> emp : employees) {
             String dept = emp.get("Department");
             int salary = Integer.parseInt(emp.get("Salary"));
+
             departmentCount.put(dept, departmentCount.getOrDefault(dept, 0) + 1);
             departmentSalarySum.put(dept, departmentSalarySum.getOrDefault(dept, 0) + salary);
+        }
+        // Output
 
-            // Calculate average 
+        for (String dept : departmentCount.keySet()) {
             int count = departmentCount.get(dept);
             int totalSalary = departmentSalarySum.get(dept);
             int averageSalary = totalSalary / count;
-
-
-            // output
 
             System.out.println("Department: " + dept);
             System.out.println("Employees: " + count);
