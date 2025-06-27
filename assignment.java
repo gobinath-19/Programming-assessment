@@ -4,14 +4,14 @@ public class assignment {
 
     public static void main(String[] args) {
         String[] data = {
-            "101 | Alice Johnson | Sales | 45000",
-            "102 | Bob Smith | Finance | 52000",
-            "103 | Claire Lee | Sales | 47000",
-            "104 | Dave Roy | IT | 50000",
-            "105 | Eva Patel | Finance | 55000"
+                "101 | Alice Johnson | Sales | 45000",
+                "102 | Bob Smith | Finance | 52000",
+                "103 | Claire Lee | Sales | 47000",
+                "104 | Dave Roy | IT | 50000",
+                "105 | Eva Patel | Finance | 55000"
         };
 
-        // Parse this list into a clean structure such as a list of dictionaries:
+        // Step 1: Parse the data into a list of maps
         List<Map<String, String>> employees = new ArrayList<>();
 
         for (String record : data) {
@@ -26,41 +26,28 @@ public class assignment {
             }
         }
 
-        // Number of employees in each department
-        Map<String, List<Integer>> departmentSalaries = new HashMap<>();
+        // Step 2: Count employees and sum salaries per department
+        Map<String, Integer> departmentCount = new HashMap<>();
+        Map<String, Integer> departmentSalarySum = new HashMap<>();
 
         for (Map<String, String> emp : employees) {
             String dept = emp.get("Department");
             int salary = Integer.parseInt(emp.get("Salary"));
 
-            departmentSalaries
-                .computeIfAbsent(dept, k -> new ArrayList<>())
-                .add(salary);
+            departmentCount.put(dept, departmentCount.getOrDefault(dept, 0) + 1);
+            departmentSalarySum.put(dept, departmentSalarySum.getOrDefault(dept, 0) + salary);
         }
 
-        // Average salary for each department
-        List<Map<String, Object>> stats = new ArrayList<>();
+        // Step 3: Print output in the desired format
+        for (String dept : departmentCount.keySet()) {
+            int count = departmentCount.get(dept);
+            int totalSalary = departmentSalarySum.get(dept);
+            int averageSalary = totalSalary / count;
 
-        for (String dept : departmentSalaries.keySet()) {
-            List<Integer> salaries = departmentSalaries.get(dept);
-            int total = 0;
-            for (int sal : salaries) total += sal;
-            int avg = total / salaries.size();
-
-            Map<String, Object> deptInfo = new HashMap<>();
-            deptInfo.put("Department", dept);
-            deptInfo.put("Employees", salaries.size());
-            deptInfo.put("Average", avg);
-
-            stats.add(deptInfo);
-        }
-
-        // Output
-        for (Map<String, Object> stat : stats) {
-            System.out.println("Department: " + stat.get("Department"));
-            System.out.println("Employees: " + stat.get("Employees"));
-            System.out.println("Average Salary: " + stat.get("Average"));
-            System.out.println();
+            System.out.println("Department: " + dept);
+            System.out.println("Employees: " + count);
+            System.out.println("Average Salary: " + averageSalary);
+            System.out.println(); 
         }
     }
-}             
+}
