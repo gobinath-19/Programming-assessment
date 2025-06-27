@@ -11,7 +11,7 @@ public class assignment {
                 "105 | Eva Patel | Finance | 55000"
         };
 
-        // Step 1: Parse the data into a list of maps
+        // Parse data
         List<Map<String, String>> employees = new ArrayList<>();
 
         for (String record : data) {
@@ -26,28 +26,28 @@ public class assignment {
             }
         }
 
-        // Step 2: Count employees and sum salaries per department
+        // Number of employees in each department
         Map<String, Integer> departmentCount = new HashMap<>();
         Map<String, Integer> departmentSalarySum = new HashMap<>();
 
         for (Map<String, String> emp : employees) {
             String dept = emp.get("Department");
             int salary = Integer.parseInt(emp.get("Salary"));
-
             departmentCount.put(dept, departmentCount.getOrDefault(dept, 0) + 1);
             departmentSalarySum.put(dept, departmentSalarySum.getOrDefault(dept, 0) + salary);
-        }
 
-        // Step 3: Print output in the desired format
-        for (String dept : departmentCount.keySet()) {
+            // Calculate average 
             int count = departmentCount.get(dept);
             int totalSalary = departmentSalarySum.get(dept);
             int averageSalary = totalSalary / count;
 
+
+            // output
+
             System.out.println("Department: " + dept);
             System.out.println("Employees: " + count);
             System.out.println("Average Salary: " + averageSalary);
-            System.out.println(); 
+            System.out.println();
         }
     }
 }
